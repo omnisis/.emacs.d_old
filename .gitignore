@@ -1,0 +1,8 @@
+tmpdir/
+saves/
+auto-save-list/
+el-get/
+elpa/
+.ido.last
+ac-comphist.dat
+projectile-bookmarks.eld
