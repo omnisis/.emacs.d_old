@@ -46,5 +46,5 @@
 ;; Git integration
 ;;--
 (require 'magit)
-
+  
 (provide 'chj-extras)

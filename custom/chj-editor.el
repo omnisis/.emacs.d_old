@@ -6,6 +6,18 @@
 
 (defconst emacs-tmpdir (expand-file-name "tmpdir" "~/.emacs.d"))
 
+(defvar emacs-extra-paths '("/usr/local/bin") 
+"Extra paths to make available to EMACS when running commands.")
+
+(defun add-to-path (x)
+  (setenv "PATH" (concat (getenv "PATH") ":" x)))
+
+;; add emacs-extra-paths to exec-path
+(setq exec-path (append emacs-extra-paths exec-path))
+
+;; add all extra paths to the system PATH variable
+(mapc (lambda (x) (add-to-path x)) emacs-extra-paths)
+
 (defun ido-choose-from-recentf ()
   "Use ido to select a recently visited file from the `recentf-list'"
   (interactive)
@@ -92,8 +104,8 @@
   (require 'bookmark)
   (setq bookmark-default-file (expand-file-name "bookmarks" emacs-savedir)
         bookmark-save-flag 1)
-    
-)
+  
+  )
 
 ;; tramp, for remote access
 (progn 
@@ -101,5 +113,5 @@
   (setq tramp-default-method "ssh"))
 
 (provide 'chj-editor)
-   
-  
+
+

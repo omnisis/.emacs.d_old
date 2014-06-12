@@ -15,7 +15,8 @@
     "r" 'ido-choose-from-recentf
     "k" 'kill-buffer
     "d" 'ido-dired
-    "x" 'smex)
+    "x" 'smex
+    "g" 'magit-status)
   ;; evil-mode config
   (mapc (lambda (mode)
           (add-to-list 'evil-emacs-state-modes mode))
