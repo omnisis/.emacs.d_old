@@ -5,6 +5,14 @@
 
 ;; cause ensime-mode to be started whenever scala-mode is enabled
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+i
+
+;; set some scala mode only key mappings for interacting with SBT 
+(add-hook 'scala-mode-hook (lambda ()
+  (interactive)
+  (local-set-key (kbd "<f5>") 'sbt-start) 
+  (local-set-key (kbd "<f6>") 'sbt-command)
+  (local-set-key (kbd "<f7>") 'sbt-paste-region)))
 
 (require 'sbt-mode)
 (setq sbt:program-name "/usr/local/bin/sbt")   

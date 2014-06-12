@@ -16,4 +16,12 @@
   (load-theme 'solarized-dark t)
   )
 
+;; default font
+(set-default-font "Menlo 13")  
+
+;; zooming
+(global-set-key (kbd "C-c C-=") 'text-scale-increase)
+(global-set-key (kbd "C-c C--") 'text-scale-decrease)
+(global-set-key (kbd "C-c C-0") (lambda () (interactive) (text-scale-set 0)))
+
 (provide 'chj-appearance)

@@ -59,6 +59,10 @@
 ;; Basic Editor Settings
 (progn
 
+  ;; Default Binding for keyboard quit is too hard to reach (C-g), S-k feels much nicer
+  (global-unset-key (kbd "C-g"))
+  (global-set-key (kbd "s-K") 'keyboard-quit)
+ 
   ;; use UTF-8 like the rest of the 21st century
   (prefer-coding-system 'utf-8)
   

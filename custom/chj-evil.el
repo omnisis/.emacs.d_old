@@ -12,11 +12,16 @@
   (evil-leader/set-key
     "f" 'ido-find-file
     "b" 'ido-switch-buffer
-    "r" 'ido-choose-from-recentf
+    ;"r" 'ido-choose-from-recentf
+    "r" 'helm-mini
     "k" 'kill-buffer
     "d" 'ido-dired
-    "x" 'smex
-    "g" 'magit-status)
+    ;"x" 'smex
+    "x" 'helm-M-x
+    "l" 'goto-line
+    "m" 'bookmark-set 
+    "j" 'bookmark-jump
+    "gg" 'magit-status) 
   ;; evil-mode config
   (mapc (lambda (mode)
           (add-to-list 'evil-emacs-state-modes mode))

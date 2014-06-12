@@ -23,17 +23,20 @@
 ;;---
 (progn
   (require 'yasnippet)
-  (yas-global-mode 1)
   (setq yas-snippet-dirs
         '("~/.emacs.d/snippets"
           "~/Dev/yasnippet-snippets"
           )))
+  (yas-reload-all)
+  (add-hook 'prog-mode-hook
+             '(lambda ()
+               (yas-minor-mode)))
 
 ;;---
 ; smex
 ;;---
-(require 'smex)
-(smex-initialize)
+;;(require 'smex)
+;;(smex-initialize)
 
 ;;---
 ;; rainbox-delimiters (makes matching up delims easy to see)
@@ -46,5 +49,12 @@
 ;; Git integration
 ;;--
 (require 'magit)
+
+;;---
+;; Helm
+;;---
+(require 'helm-config)
+(require 'helm-ls-git)
+
   
 (provide 'chj-extras)
