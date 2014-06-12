@@ -6,4 +6,13 @@
 ;; cause ensime-mode to be started whenever scala-mode is enabled
 (add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
 
+(require 'sbt-mode)
+(setq sbt:program-name "/usr/local/bin/sbt")   
+(add-hook 'sbt-mode-hook '(lambda ()
+  ;; compilation skip threshold tells the compilation minor-mode whihc
+  ;; type of compiler output can be skipped: 1 = skip info, 2 = skip info and warnings
+  (setq compilation-skip-threshold 1)
+  (local-set-key (kbd "C-a") 'comint-bol)
+  (local-set-key (kbd "M-RET") 'comint-accumulate)))
+
 (provide 'chj-scala)

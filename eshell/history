@@ -1,0 +1,7 @@
+ls -alh
+top
+ls -alh
+ack
+cat chj-appearance.el 
+ls -al
+clear

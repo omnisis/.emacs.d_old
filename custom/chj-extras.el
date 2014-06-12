@@ -34,6 +34,17 @@
 ;;---
 (require 'smex)
 (smex-initialize)
-  
+
+;;---
+;; rainbox-delimiters (makes matching up delims easy to see)
+;;---
+(require 'rainbow-delimiters)
+(add-hook 'proj-mode-hook 'rainbow-delimiters-mode) 
+
+
+;;---
+;; Git integration
+;;--
+(require 'magit)
 
 (provide 'chj-extras)

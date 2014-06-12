@@ -1,0 +1,5 @@
+(:name sbt-mode 
+       :description "SBT Mode for Emacs"
+       :type github
+       :pkgname "hvesalai/sbt-mode")
+       
