@@ -111,11 +111,15 @@
   
   )
 
+;; CUA mode for std copy/cut/paste behavior
+(cua-mode t)
+
 ;; tramp, for remote access
 (progn 
   (require 'tramp)
   (setq tramp-default-method "ssh"))
 
 (provide 'chj-editor)
+
 
 

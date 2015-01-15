@@ -1,14 +1,16 @@
 ;;---
-;; Configure ack-and-a-half (a better grep)
+;; Configure ack (a better grep)
 ;;---
 (progn
-  (require 'ack-and-a-half)
-  (setq ack-and-a-half-executable "/usr/local/bin/ack")
+  ;;(require 'ack-and-a-half)
+  ;;(setq ack-and-a-half-executable "/usr/local/bin/ack")
+  (add-to-list 'load-path "/usr/local/bin/ack")
+ 
   ;; create shorter aliases
-  (defalias 'ack 'ack-and-a-half)
-  (defalias 'ack-same 'ack-and-a-half-same)
-  (defalias 'ack-find-file 'ack-and-a-half-find-file)
-  (defalias 'ack-find-file-same 'ack-and-a-half-find-file-same)
+  (autoload 'ack-same "full-ack" nil t)
+  (autoload 'ack "full-ack" nil t)
+  (autoload 'ack-find-same-file "full-ack" nil t)
+  (autoload 'ack-find-file "full-ack" nil t)
   )
 
 ;;---
@@ -42,7 +44,7 @@
 ;; rainbox-delimiters (makes matching up delims easy to see)
 ;;---
 (require 'rainbow-delimiters)
-(add-hook 'proj-mode-hook 'rainbow-delimiters-mode) 
+(add-hook 'proj-mode-hook (lambda () 'rainbow-delimiters-mode))
 
 
 ;;---
@@ -53,8 +55,19 @@
 ;;---
 ;; Helm
 ;;---
+(require 'helm)
 (require 'helm-config)
-(require 'helm-ls-git)
+;;(require 'helm-ls-git)
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
+(global-set-key (kbd "M-a") 'helm-M-x)
+(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+
+;;---
+;; Powerline
+;;---
+;;(require 'powerline)
+;;(powerline-default-theme)
 
   
 (provide 'chj-extras)

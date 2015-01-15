@@ -12,7 +12,7 @@
   
 
   ;; color theme settings
-  (require 'color-theme)
+  ;; NO LONGER NEEDED IN EMACS24 !!! (require 'color-theme)
   (load-theme 'solarized-dark t)
   )
 

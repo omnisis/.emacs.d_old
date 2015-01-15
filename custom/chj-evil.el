@@ -11,7 +11,8 @@
   (evil-leader/set-leader "<SPC>") 
   (evil-leader/set-key
     "f" 'ido-find-file
-    "b" 'ido-switch-buffer
+    ;"b" 'ido-switch-buffer
+    "b"  'helm-buffers-list
     ;"r" 'ido-choose-from-recentf
     "r" 'helm-mini
     "k" 'kill-buffer
@@ -19,14 +20,40 @@
     ;"x" 'smex
     "x" 'helm-M-x
     "l" 'goto-line
-    "m" 'bookmark-set 
-    "j" 'bookmark-jump
-    "gg" 'magit-status) 
-  ;; evil-mode config
-  (mapc (lambda (mode)
-          (add-to-list 'evil-emacs-state-modes mode))
-        '(sbt-mode))
-  (evil-mode t)
+    "s" 'bookmark-set 
+    "b" 'helm-bookmarks
+    "g" 'magit-status) 
+
+  ;; Tweak default State for various modes (default is Normal, as in Vim) 
+  (loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
+                                (nrepl-mode . insert)
+                                (sbt-mode . emacs)
+                                (pylookup-mode . emacs)
+                                (comint-mode . normal)
+                                (shell-mode . insert)
+                                (git-commit-mode . insert)
+                                (git-rebase-mode . emacs)
+                                (term-mode . emacs)
+                                (help-mode . emacs)
+                                (helm-grep-mode . emacs)
+                                (grep-mode . emacs)
+                                (bc-menu-mode . emacs)
+                                (magit-branch-manager-mode . emacs)
+                                (rdictcc-buffer-mode . emacs)
+                                (dired-mode . emacs)
+                                (wdired-mode . normal))
+        do (evil-set-initial-state mode state))
+
+  ;; ESC quits
+  (define-key evil-normal-state-map [escape] 'keyboard-quit)
+  (define-key evil-visual-state-map [escape] 'keyboard-quit)
+  (define-key minibuffer-local-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-ns-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-completion-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-must-match-map [escape] 'minibuffer-keyboard-quit)
+  (define-key minibuffer-local-isearch-map [escape] 'minibuffer-keyboard-quit)
+
+  (evil-mode 1)
 )
 
 (provide 'chj-evil)
