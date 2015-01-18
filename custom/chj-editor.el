@@ -2,22 +2,6 @@
 ;; Constant Directories
 ;; ---
 
-(defconst emacs-savedir (expand-file-name "saves/" "~/.emacs.d"))
-
-(defconst emacs-tmpdir (expand-file-name "tmpdir" "~/.emacs.d"))
-
-(defvar emacs-extra-paths '("/usr/local/bin") 
-"Extra paths to make available to EMACS when running commands.")
-
-(defun add-to-path (x)
-  (setenv "PATH" (concat (getenv "PATH") ":" x)))
-
-;; add emacs-extra-paths to exec-path
-(setq exec-path (append emacs-extra-paths exec-path))
-
-;; add all extra paths to the system PATH variable
-(mapc (lambda (x) (add-to-path x)) emacs-extra-paths)
-
 (defun ido-choose-from-recentf ()
   "Use ido to select a recently visited file from the `recentf-list'"
   (interactive)
@@ -33,15 +17,59 @@
   (setq ido-enable-flex-matching t)
   (setq ido-user-filename-at-point 'guess)
   (setq ido-show-dot-for-dired t)
-  ;; ido related keymap bindings
-  (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
-  ;;(global-set-key (kbd "C-x C-c") 'ido-switch-buffer)
-  (global-set-key (kbd "C-x b") 'ibuffer)
-  ;; hotkey to integrate find-recent with ido
-  (global-set-key (kbd "C-x r") 'ido-choose-from-recentf))
-
+)
+  
 ;; C-x C-j opens dired with the cursor on the file you are editing
 (require 'dired-x)
+
+;; ---
+;; Desktop Save Behvaior
+;; ---
+(setq
+ desktop-path '("~/.emacs.d/")
+ desktop-dirname "~/.emacs.d/"
+ desktop-base-file-name "emacs-desktop")
+
+;; remove desktop after it's been read
+(defun remove-desktop ()
+  ;; desktop-remove clears desktop-dirname
+  (setq desktop-dirname-tmp desktop-dirname)
+  (desktop-remove)
+  (setq desktop-dirname desktop-dirname-tmp))
+
+(add-hook 'desktop-after-read-hook
+	  'remove-desktop)
+	 
+(defun saved-session ()
+  (file-exists-p (concat desktop-dirname "/" desktop-base-file-name)))
+
+;; use session-restore to restore the desktop manually
+(defun session-restore ()
+  "Restore a saved emacs session."
+  (interactive)
+  (if (saved-session)
+      (desktop-read)
+    (message "No desktop found.")))
+
+;; use session-save to save the desktop manually
+(defun session-save ()
+  "Save an emacs session."
+  (interactive)
+  (if (saved-session)
+      (if (y-or-n-p "Overwrite existing desktop? ")
+	  (desktop-save-in-desktop-dir)
+	(message "Session not saved."))
+  (desktop-save-in-desktop-dir)))
+
+;; ask user whether to restore desktop at start-up
+(defun restore-desktop-prompt ()
+  (if (saved-session)
+      (if (y-or-n-p "Restore desktop? ")
+          (session-restore))))
+
+(add-hook 'after-init-hook
+          'restore-desktop-prompt)
+
 
 ;; --- 
 ;; Backup/Savefile Configuration
@@ -59,12 +87,11 @@
 ;; Basic Editor Settings
 (progn
 
-  ;; Default Binding for keyboard quit is too hard to reach (C-g), S-k feels much nicer
-  (global-unset-key (kbd "C-g"))
-  (global-set-key (kbd "s-K") 'keyboard-quit)
- 
   ;; use UTF-8 like the rest of the 21st century
   (prefer-coding-system 'utf-8)
+
+  ;;; Prevent Extraneous Tabs
+  (setq-default indent-tabs-mode nil)
   
   ;; beep! mutha-fucker, i freakin dare you (tried (setq visible-bell t) but it's uuuglee) 
   (setq ring-bell-function 'ignore)
@@ -112,14 +139,17 @@
   )
 
 ;; CUA mode for std copy/cut/paste behavior
-(cua-mode t)
+;;(cua-mode t)
 
 ;; tramp, for remote access
 (progn 
   (require 'tramp)
   (setq tramp-default-method "ssh"))
 
-(provide 'chj-editor)
+;; Highlight extremely long lines
+(require 'whitespace)
 
+
+(provide 'chj-editor)
 
 

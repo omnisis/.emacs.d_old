@@ -1,3 +1,12 @@
+;; --
+;; Its debatable whether this configuration belongs in another file, this is mostly
+;; config and plugins of the form: "Pimp my Emacs", that is things that make Emacs rock
+;; and turn it into more of a sentient being than a simple text editor, things like
+;; experimental text navigation modes, or Helm, project mgmt, things like that.
+;; --
+
+
+
 ;;---
 ;; Configure ack (a better grep)
 ;;---
@@ -20,19 +29,6 @@
   (require 'projectile)
   (projectile-global-mode))
 
-;;---
-;; YAS Snippet
-;;---
-(progn
-  (require 'yasnippet)
-  (setq yas-snippet-dirs
-        '("~/.emacs.d/snippets"
-          "~/Dev/yasnippet-snippets"
-          )))
-  (yas-reload-all)
-  (add-hook 'prog-mode-hook
-             '(lambda ()
-               (yas-minor-mode)))
 
 ;;---
 ; smex
@@ -56,12 +52,18 @@
 ;; Helm
 ;;---
 (require 'helm)
-(require 'helm-config)
+(defun chj-helm-setup ()
+  (require 'helm-config)
+  (setq helm-input-idle-delay 0.2)
+  (setq helm-M-x-fuzzy-match t)
+  (setq helm-buffers-fuzzy-matching t
+        helm-recentf-fuzzy-match    t)
+  (setq helm-semantic-fuzzy-match t
+      helm-imenu-fuzzy-match    t)
+  (helm-mode t)
+  )
+(chj-helm-setup)
 ;;(require 'helm-ls-git)
-(global-set-key (kbd "C-c h") 'helm-command-prefix)
-(global-set-key (kbd "C-x C-b") 'helm-buffers-list)
-(global-set-key (kbd "M-a") 'helm-M-x)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
 
 ;;---
 ;; Powerline
