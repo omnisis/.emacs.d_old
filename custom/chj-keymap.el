@@ -99,13 +99,15 @@
 
 ;; Use C-o to hit other window
 (global-set-key (kbd "C-o") 'other-window)
+;; minimizing emacs is a pain
+(global-unset-key (kbd "C-z"))
 
 ;; ido related keymap bindings
 ;; (global-set-key (kbd "C-x C-b") 'ido-switch-buffer)
 ;; (global-set-key (kbd "C-x C-c") 'ido-switch-buffer)
 ;; (global-set-key (kbd "C-x b") 'ibuffer)
 ;; hotkey to integrate find-recent with ido
-;; (global-set-key (kbd "C-x r") 'ido-choose-from-recentf))
+(global-set-key (kbd "M-r") 'ido-choose-from-recentf)
 
 ;; Term management
 (require 'multi-term)

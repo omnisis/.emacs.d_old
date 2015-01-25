@@ -5,8 +5,6 @@
 ;; experimental text navigation modes, or Helm, project mgmt, things like that.
 ;; --
 
-
-
 ;;---
 ;; Configure ack (a better grep)
 ;;---
@@ -19,15 +17,19 @@
   (autoload 'ack-same "full-ack" nil t)
   (autoload 'ack "full-ack" nil t)
   (autoload 'ack-find-same-file "full-ack" nil t)
-  (autoload 'ack-find-file "full-ack" nil t)
-  )
+  (autoload 'ack-find-file "full-ack" nil t))
 
 ;;---
 ;; Configure projectile (A project editor)
 ;;--
-(progn
-  (require 'projectile)
-  (projectile-global-mode))
+(defun chj-setup-projectile()
+  (let ((projectile-ignorelist '(".ensime_cache" "target" "build")))
+    (mapcar (lambda (p) (add-to-list 'projectile-globally-ignored-files p)) projectile-ignorelist)))
+
+(require 'projectile)
+(setq projectile-cache-file (expand-file-name "projectile.cache" emacs-savedir))
+(projectile-global-mode t)
+(add-hook 'projectile-mode-hook 'chj-setup-projectile)
 
 
 ;;---
@@ -40,7 +42,7 @@
 ;; rainbox-delimiters (makes matching up delims easy to see)
 ;;---
 (require 'rainbow-delimiters)
-(add-hook 'proj-mode-hook (lambda () 'rainbow-delimiters-mode))
+(add-hook 'prog-mode-hook (lambda () 'rainbow-delimiters-mode))
 
 
 ;;---
@@ -60,8 +62,7 @@
         helm-recentf-fuzzy-match    t)
   (setq helm-semantic-fuzzy-match t
       helm-imenu-fuzzy-match    t)
-  (helm-mode t)
-  )
+  (helm-mode t))
 (chj-helm-setup)
 ;;(require 'helm-ls-git)
 

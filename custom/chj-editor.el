@@ -94,19 +94,6 @@
           'restore-desktop-prompt)
 
 
-;; --- 
-;; Backup/Savefile Configuration
-;; ---
-(progn
-  (setq
-   backup-by-copying t ; don't clobber symlinks
-   delete-old-versions t
-   kept-new-versions 6
-   kept-old-versions 2
-   version-control t)
-  (setq backup-directory-alist `((".*" .  ,emacs-tmpdir)))
-  (setq auto-save-file-name-transforms `((".*" ,emacs-tmpdir t))))
-
 ;; Basic Editor Settings
 (progn
 

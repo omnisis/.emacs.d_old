@@ -1,3 +1,5 @@
+(require 'diminish)
+
 ;; Allow pasting selection outside of Emacs
 (setq x-select-enable-clipboard t)
 
@@ -61,6 +63,25 @@
 	recentf-auto-cleanup 'never)
 (recentf-mode 1)
 
+;; ---
+;; Backup/Savefile configuration
+;; ---
+
+;; store all backup and autosave files in the tmp dir
+(setq backup-directory-alist
+      `((".*" . ,emacs-tmpdir)))
+(setq auto-save-file-name-transforms
+      `((".*" ,emacs-tmpdir t)))
+
+;; autosave the undo-tree history
+(setq undo-tree-history-directory-alist
+      `((".*" . ,emacs-tmpdir)))
+
+(setq undo-tree-auto-save-history t)
+
+;; autosave the tramp-history
+(setq tramp-backup-directory-alist `((".*" . ,emacs-tmpdir)))
+
 
 ;; Save minibuffer history
 (savehist-mode 1)
@@ -101,6 +122,7 @@
 (setq undo-tree-mode-lighter "")
 (require 'undo-tree)
 (global-undo-tree-mode)
+(diminish 'undo-tree-mode)
 
 ;; Sentences do not need double spaces to end. Period.
 (set-default 'sentence-end-double-space nil)

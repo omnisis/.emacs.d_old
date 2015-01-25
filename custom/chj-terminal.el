@@ -33,6 +33,10 @@
   (setq system-uses-terminfo t)
 )
 
+(defun chj-term-mode-hook ()
+  (setq yas-dont-activate t))
+
+(add-hook 'term-mode-hook 'chj-term-mode-hook)
 
 ;; NOTE: In order to get proper terminal support for eterm-color you need to run this command
 ;; tic -o ~/.terminfo /Applications/Emacs.app/Contents/Resources/etc/e/eterm-color.ti
