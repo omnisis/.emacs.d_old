@@ -23,7 +23,8 @@
 (global-hl-line-mode 1)
 
 ;; default font
-(set-default-font "Inconsolata 13")
+;;(set-default-font "Inconsolata 13")
+(set-default-font "Melo 12")
 
 ;; Unclutter the modeline
 (require 'diminish)

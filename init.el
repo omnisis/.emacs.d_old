@@ -1,6 +1,8 @@
 ;;; Emacs Load Path
 ;;; Add a custom directory for custom extensions
-(setq load-path (cons "~/.emacs.d/custom" load-path))
+(add-to-list 'load-path "~/.emacs.d/custom")
+;; TODO: get all top-level dirs and add to load-path automatically
+(add-to-list 'load-path "~/.emacs.d/vendor/ensime-emacs")
 
 ;;; Initialize Emacs Package System
 (require 'package)
@@ -39,14 +41,18 @@
   'org-ac
   'browse-kill-ring
   'css-mode
+  'dash
   'diminish
   'emmet-mode
   'ac-emmet
   'ac-etags
   'ac-ispell
+  ;;'ensime : I built this from source
   'exec-path-from-shell
   'fill-column-indicator
   'flycheck
+  'flx-ido ;; better matching engine for Ido
+  'ido-vertical-mode
   'python-mode
   'smartparens
   'auctex
@@ -58,8 +64,10 @@
   'full-ack
   'projectile
   'helm
+  'help-fns+
   'rainbow-delimiters
   'markdown-mode
+  'neotree  ;; like vim's NERDTree for emacs
   'yasnippet
   'multi-term
   'elpy
@@ -68,6 +76,13 @@
   'twilight-theme
   ;; 'ergoemacs-mode
   'latex-preview-pane
+  'scala-mode2
+  'sbt-mode
+  'smooth-scrolling
+  's
+  'dash
+  'slime
+  'undo-tree
   )
 
 ;; Make sure PATH is setup properly from the syspath
@@ -78,13 +93,16 @@
 
 ;; Load custom elisp code
 (require 'chj-defuns) ;; should come first: contains re-usable elisp functions
-(require 'chj-appearance)
-(require 'chj-editor)
-;;(require 'chj-completion)
-(require 'chj-extras)
-(require 'chj-python)
-(require 'chj-latex)
-(require 'chj-terminal)
+(require 'chj-defaults) ;; basic settings to make Emacs sane
+(require 'chj-appearance) ;; appearance related tweaks
+(require 'chj-editor) ;; editor changes
+(require 'chj-completion) ;; completion with auto-complete, company, yasnippets, etc
+(require 'chj-extras) ;; Eye Candy and extra fluff
+(require 'chj-java) ;; JVM lang settings
+(require 'chj-scala) ;; Scala-Specfic settings
+(require 'chj-python) ;; Python Specific settings
+(require 'chj-latex) ;; Tex related settings
+(require 'chj-terminal) ;; Settings for Terminal/Shell modes
 (require 'chj-keymap) ;; should come last: contains all keybindings for various plugins and modes
 
 ;; Custom Voodoo

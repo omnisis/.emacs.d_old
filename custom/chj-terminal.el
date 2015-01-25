@@ -18,8 +18,8 @@
 
 ;; Terminal configuration
 (progn
-  (setq multi-term-dedicated-max-window-height 38)
-  (setq multi-term-dedicated-window-height 28)
+  (setq multi-term-dedicated-max-window-height 35)
+  (setq multi-term-dedicated-window-height 35)
   (setq multi-term-dedicated-select-after-open-p t)
   (setq multi-term-dedicated-skip-other-window-p t)
   (setq multi-term-switch-after-close t)

@@ -1,3 +1,5 @@
+(require 'ido)
+
 ;; ---
 ;; Constant Directories
 ;; ---
@@ -10,15 +12,36 @@
 ;; ---
 ;; IDO Configuration
 ;; ---
-(progn 
-  (interactive)
-  (ido-mode t)
-  (setq ido-save-directory-list-file "~/.emacs.d/.ido.last")
-  (setq ido-enable-flex-matching t)
-  (setq ido-user-filename-at-point 'guess)
-  (setq ido-show-dot-for-dired t)
-)
+(ido-mode t)
+(setq ido-enable-prefix nil
+      ido-save-directory-list-file "~/.emacs.d/.ido.last"
+      ido-enable-flex-matching t
+      ido-case-fold nil
+      ido-auto-merge-work-directories-length -1
+      ido-create-new-buffer 'always
+      ido-use-filename-at-point 'guess
+      ido-show-dot-for-direcd t
+      ido-max-prospects 10)
+
+;; Ido + Flx-Ido
+(require 'flx-ido)
+(flx-ido-mode 1)
+;; disable ido fasces to see flx highlights
+(setq ido-user-faces nil)
+
+;; flx-ido looks better w/ ido-vertical-mode
+(require 'ido-vertical-mode)
+(ido-vertical-mode)
+
+(defun chj-ido-vertical-keybindings()
+  (define-key ido-completion-map (kbd "C-n") 'ido-next-match)
+  (define-key ido-completion-map (kbd "<down>") 'ido-next-match)
+  (define-key ido-completion-map (kbd "C-p") 'ido-next-match)
+  (define-key ido-completion-map (kbd "<up>") 'ido-next-match))
+
+(add-hook 'ido-vertical-mode-hook 'chj-ido-vertical-keybindings)
   
+
 ;; C-x C-j opens dired with the cursor on the file you are editing
 (require 'dired-x)
 
@@ -87,49 +110,19 @@
 ;; Basic Editor Settings
 (progn
 
-  ;; use UTF-8 like the rest of the 21st century
-  (prefer-coding-system 'utf-8)
-
-  ;;; Prevent Extraneous Tabs
-  (setq-default indent-tabs-mode nil)
-  
   ;; beep! mutha-fucker, i freakin dare you (tried (setq visible-bell t) but it's uuuglee) 
   (setq ring-bell-function 'ignore)
 
-  ;; whenever an external process changes a file under emacs and there
-  ;; was no buffer local modification, just revert to ondisk contents
-  (global-auto-revert-mode 1)
-  
-  ;; Settings related to editing of text
+   ;; Settings related to editing of text
   (setq-default indent-tabs-mode nil) ;; no tabs
   (setq-default tab-with 4)           ;; maintain 4 char tabwidth by default
 
   ;; tell Emacs to help me help me
   (setq suggest-key-bindings t)
   
-  ;; delete the selection with a keypress
-  (delete-selection-mode)
-  
-  ;; meaningful names for buffers with the same name
-  (require 'uniquify)
-  (setq uniquify-buffer-name-style 'forward)
-  (setq uniquify-separator "/")
-  (setq uniquify-after-kill-buffer-p t) ; rename after killing uniquified
-  (setq uniquify-ignore-buffers-re "^\\*") ; don't muck with special buffers
-  
-
   ;; saveplace remembers your location in a file when saving files
   (require 'saveplace)
   (setq save-place-file (expand-file-name "saveplace" emacs-savedir))
-
-  ;; save recent files
-  (require 'recentf)
-  (setq recentf-save-file (expand-file-name "recentf" emacs-savedir)
-	recentf-max-saved-items 500
-	recentf-max-menu-items 15
-	;; disable recentf cleanup on start (causes issues with remote files)
-	recentf-auto-cleanup 'never)
-  (recentf-mode 1)
 
   ;; bookmarks
   (require 'bookmark)

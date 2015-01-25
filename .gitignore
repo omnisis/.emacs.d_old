@@ -24,3 +24,5 @@ url/
 /#!usr!local!Cellar!emacs!24.4!share!emacs!24.4!lisp!emacs-lisp!nadvice.el.gz#
 /eshell/history
 /custom/.emacs.desktop
+/history
+/vendor/

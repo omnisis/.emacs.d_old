@@ -34,7 +34,7 @@
 (global-set-key (kbd "M-p") 'scroll-down)
 
 ;; Occur is nice, helm-occur is nicer
-(global-set-key "\C-co" 'helm-occur)
+(global-set-key (kbd "C-c o") 'helm-occur)
 
 ;; Recursive Grep
 (global-set-key (kbd "C-c r") 'rgrep)
@@ -50,7 +50,12 @@
 (global-set-key (kbd "<f6>") 'multi-term) ;; opens a new terminal
 (global-set-key (kbd "<f8>") 'magit-status) 
 (global-set-key (kbd "<f9>") 'helm-bookmarks)
+(require 'neotree)
+(global-set-key (kbd "<f10>") 'neotree) 
 
+
+;; C-c C-l Toggles showing line numbers
+(global-set-key (kbd "C-c C-l") 'linum-mode)
 
 ;; Map escape to cancel (like C-g)...
 (global-set-key [escape] 'keyboard-escape-quit)     
