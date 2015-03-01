@@ -63,7 +63,7 @@
 (add-hook 'desktop-after-read-hook
 	  'remove-desktop)
 	 
-(defun saved-session ()
+(defun saved-session ()
   (file-exists-p (concat desktop-dirname "/" desktop-base-file-name)))
 
 ;; use session-restore to restore the desktop manually

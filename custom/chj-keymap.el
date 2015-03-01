@@ -2,9 +2,27 @@
 (when (eq system-type 'darwin) ;; mac specific settings
   (setq mac-option-modifier 'super) ;; option is super
   (setq mac-command-modifier 'meta) ;; cmd as meta since it is bigger than option/control
-  (setq ns-function-modifier 'hyper)
+  (setq ns-function-modifier 'hyper) ;; function key is hyper
   (global-set-key [kp-delete] 'delete-char)) ;; sets fn-delete to be right-delete
 
+
+;; buffer navigation
+(global-set-key (kbd "C-c [") 'previous-buffer)
+(global-set-key (kbd "C-c ]") 'next-buffer)
+(global-set-key (kbd "C-c C-r") 'helm-recentf)
+
+;; Buffer / File Management
+(defun chj-new-empty-buffer ()
+  "open a new empty buffer."
+  (interactive)
+  (let ((buf (generate-new-buffer "untitled")))
+    (switch-to-buffer buf)
+    (funcall (and initial-major-mode))
+    (setq buffer-offer-save t)))
+
+(global-set-key (kbd "C-c C-n") 'chj-new-empty-buffer)
+(global-set-key (kbd "<f4>") 'rename-buffer)
+(global-set-key (kbd "C-<f4>") 'rename-file)
  
 ;; zooming / screen control
 (global-set-key (kbd "C-c C-=") 'text-scale-increase)
@@ -13,10 +31,13 @@
 (global-set-key (kbd "M-<f10>") 'toggle-frame-maximized)  ;; maximize frame
 (global-set-key (kbd "M-<f11>") 'toggle-frame-fullscreen)  ;; toggle fullscreen
 
+;; window movement
 ;; provides shift + [up/down/right/left] for window movement as oppossed to C-x o 
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 
+;; Easy Quit
+(global-set-key (kbd "H-`") 'save-buffers-kill-terminal)
 
 ;; Motion
 ;; >>>
@@ -77,17 +98,6 @@
 ;;(global-set-key (kbd "M-o") 'ido-find-file)
 
 
-(defun chj-new-empty-buffer ()
-  "open a new empty buffer."
-  (interactive)
-  (let ((buf (generate-new-buffer "untitled")))
-    (switch-to-buffer buf)
-    (funcall (and initial-major-mode))
-    (setq buffer-offer-save t)))
-
-;;(global-set-key (kbd "M-n") 'chj-new-empty-buffer)
-;;(global-set-key (kbd "s-r") 'rename-buffer)
-;;(global-set-key (kbd "s-R") 'rename-file)
 ;;(global-set-key (kbd "<f10>") 'ido-switch-buffer)
 ;; Helm stuff
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
@@ -113,7 +123,7 @@
 (require 'multi-term)
 (add-to-list 'term-bind-key-alist '("M-[" . multi-term-prev))
 (add-to-list 'term-bind-key-alist '("M-]" . multi-term-next))
-(add-to-list 'term-bind-key-alist '("<f10>" . man))
+(add-to-list 'term-bind-key-alist '("C-c m" . 'helm-man-woman))
 (add-to-list 'term-bind-key-alist '("C-c t" . chj-toggle-term-mode))
 ;; custom emacs unbindings for term mode
 (add-to-list 'term-unbind-key-list "C-o")

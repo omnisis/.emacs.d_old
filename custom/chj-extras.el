@@ -22,14 +22,16 @@
 ;;---
 ;; Configure projectile (A project editor)
 ;;--
-(defun chj-setup-projectile()
-  (let ((projectile-ignorelist '(".ensime_cache" "target" "build")))
-    (mapcar (lambda (p) (add-to-list 'projectile-globally-ignored-files p)) projectile-ignorelist)))
-
 (require 'projectile)
+(let ((projectile-ignorelist '(".ensime_cache" "target" "build")))
+  (mapcar (lambda (p) (add-to-list 'projectile-globally-ignored-files p)) projectile-ignorelist))
 (setq projectile-cache-file (expand-file-name "projectile.cache" emacs-savedir))
-(projectile-global-mode t)
-(add-hook 'projectile-mode-hook 'chj-setup-projectile)
+;; (projectile-global-mode t)
+
+;; really only care for text/programming modes ...
+(add-hook 'prog-mode-hook 'projectile-mode)
+(add-hook 'text-mode-hook 'projectile-mode)
+
 
 
 ;;---

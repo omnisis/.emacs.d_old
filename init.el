@@ -34,6 +34,7 @@
 (or (file-exists-p package-user-dir)
     (package-refresh-contents))
 
+
 ;; Install Desired Emacs Packages (if not already installed)
 (ensure-pkg-installed 
   'ag
@@ -70,10 +71,12 @@
   'neotree  ;; like vim's NERDTree for emacs
   'yasnippet
   'multi-term
+  ;;'persp-mode
+  ;;'persp-projectile
   'elpy
-  'zenburn-theme 
-  'solarized-theme
-  'twilight-theme
+  ;;'zenburn-theme 
+  ;;'solarized-theme
+  ;;'twilight-theme
   ;; 'ergoemacs-mode
   'latex-preview-pane
   'scala-mode2
@@ -84,6 +87,8 @@
   'slime
   'undo-tree
   )
+
+
 
 ;; Make sure PATH is setup properly from the syspath
 (require 'exec-path-from-shell)
@@ -113,12 +118,12 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+    ("e24180589c0267df991cf54bf1a795c07d00b24169206106624bb844292807b9" "9dae95cdbed1505d45322ef8b5aa90ccb6cb59e0ff26fef0b8f411dfc416c552" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(delete-selection-mode t)
  '(ergoemacs-theme-options (quote ((move-and-transpose-lines on))))
  '(initial-scratch-message "")
+ '(magit-diff-use-overlays nil)
  '(magit-use-overlays nil)
- '(org-CUA-compatible nil)
  '(org-replace-disputed-keys nil)
  '(recentf-mode t)
  '(safe-local-variable-values (quote ((project-venv-name . "stock-strategy-tester"))))
@@ -129,3 +134,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'dired-find-alternate-file 'disabled nil)

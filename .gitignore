@@ -1,5 +1,6 @@
 .*.eld
 tmpdir/
+persp-confs/
 saves/
 auto-save-list/
 el-get/

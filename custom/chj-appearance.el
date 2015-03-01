@@ -14,7 +14,7 @@
 
 ;; color theme settings
 ;; NO LONGER NEEDED IN EMACS24 !!! (require 'color-theme)
-(load-theme 'solarized-dark t)
+;; (load-theme 'solarized-dark t)
 
 ;; Highlight matching parentheses when the point is on them.
 (show-paren-mode 1)
@@ -41,5 +41,12 @@
 (eval-after-load "magit" '(diminish 'magit-auto-revert-mode))
 (eval-after-load "whitespace-cleanup-mode" '(diminish 'whitespace-cleanup-mode))
 (eval-after-load "subword" '(diminish 'subword-mode))
+
+;; Perspective support
+(with-eval-after-load "persp-mode-autoloads"
+  (setq persp-keymap-prefix (kbd "C-c C-p"))
+  (setq wg-morph-on nil) ;; switch off animation of restoring window configuration
+  (add-hook 'after-init-hook #'(lambda () (persp-mode 1))))
+
 
 (provide 'chj-appearance)

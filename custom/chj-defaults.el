@@ -59,8 +59,10 @@
 (setq recentf-save-file (expand-file-name "recentf" emacs-savedir)
 	recentf-max-saved-items 500
 	recentf-max-menu-items 15
+        ;; delete old versions without prompting
+        delete-old-versions t 
 	;; disable recentf cleanup on start (causes issues with remote files)
-	recentf-auto-cleanup 'never)
+	recentf-auto-cleanup 'neverx)
 (recentf-mode 1)
 
 ;; ---
@@ -70,12 +72,14 @@
 ;; store all backup and autosave files in the tmp dir
 (setq backup-directory-alist
       `((".*" . ,emacs-tmpdir)))
+
+;; autosave files (.e.g. #!tmp!foo.txt!# go into the tmpdir as well
 (setq auto-save-file-name-transforms
-      `((".*" ,emacs-tmpdir t)))
+      `((".*" . ,emacs-tmpdir)))
 
 ;; autosave the undo-tree history
 (setq undo-tree-history-directory-alist
-      `((".*" . ,emacs-tmpdir)))
+      `((".*" . ,emacs-tmpdir t)))
 
 (setq undo-tree-auto-save-history t)
 
