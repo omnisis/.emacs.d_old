@@ -55,37 +55,33 @@
 ;; Lines should be 80 characters wide, not 72
 (setq fill-column 80)
 
-;; Save a list of recent files visited. (open recent file with C-x f)
-(setq recentf-save-file (expand-file-name "recentf" emacs-savedir)
-	recentf-max-saved-items 500
-	recentf-max-menu-items 15
-        ;; delete old versions without prompting
-        delete-old-versions t 
-	;; disable recentf cleanup on start (causes issues with remote files)
-	recentf-auto-cleanup 'neverx)
-(recentf-mode 1)
-
 ;; ---
 ;; Backup/Savefile configuration
 ;; ---
+(defvar backup-dir (expand-file-name "~/.emacs.d/backup/"))
+(defvar autosave-dir (expand-file-name "~/.emacs.d/autosave/"))
+
+;; Save a list of recent files visited. (open recent file with C-x f)
+(setq recentf-save-file (expand-file-name "recentf" autosave-dir)
+	recentf-max-saved-items 500
+	recentf-max-menu-items 15
+    delete-old-versions t 
+	recentf-auto-cleanup 'neverx)
+(recentf-mode 1)
 
 ;; store all backup and autosave files in the tmp dir
-(setq backup-directory-alist
-      `((".*" . ,emacs-tmpdir)))
-
-;; autosave files (.e.g. #!tmp!foo.txt!# go into the tmpdir as well
-(setq auto-save-file-name-transforms
-      `((".*" . ,emacs-tmpdir)))
+(setq backup-directory-alist (list (cons ".*" backup-dir)))
+(setq auto-save-list-file-prefix autosave-dir)
+(setq auto-save-file-name-transforms `((".*" ,autosave-dir t)))
 
 ;; autosave the undo-tree history
-(setq undo-tree-history-directory-alist
-      `((".*" . ,emacs-tmpdir t)))
+;;(setq undo-tree-history-directory-alist
+;;      `((".*" . ,autosave-dir)))
 
 (setq undo-tree-auto-save-history t)
 
 ;; autosave the tramp-history
-(setq tramp-backup-directory-alist `((".*" . ,emacs-tmpdir)))
-
+(setq tramp-backup-directory-alist `((".*" . ,autosave-dir)))
 
 ;; Save minibuffer history
 (savehist-mode 1)
